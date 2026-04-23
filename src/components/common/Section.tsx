@@ -6,7 +6,7 @@ interface SectionProps {
 export function Section({ children, className }: SectionProps) {
   return (
     <section
-      className={`max-w-screen-xl mx-auto px-20 py-8 ${className ?? ''}`}
+      className={`border border-gray-200 shadow-sm rounded-lg px-10 py-8 ${className ?? ''}`}
     >
       {children}
     </section>
