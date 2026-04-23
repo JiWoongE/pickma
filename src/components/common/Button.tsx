@@ -10,7 +10,7 @@ const variantStyles = {
   filled: {
     primary: 'bg-[var(--color-primary-500)] text-white',
     danger: 'bg-[var(--color-red-500)] text-white',
-    gray: 'bg-[var(--color-gray-200)] text-white',
+    gray: 'bg-[var(--color-gray-200)] text-[var(--color-gray-900)]',
   },
   outline: {
     primary:
@@ -19,9 +19,9 @@ const variantStyles = {
     gray: 'border border-[var(--color-gray-200)] text-[var(--color-gray-200)]',
   },
   ghost: {
-    primary: 'text-var(--color-primary-500)]',
-    danger: 'text-var(--color-red-500)]',
-    gray: 'text-var(--color-gray-200)]',
+    primary: 'text-[var(--color-primary-500)]',
+    danger: 'text-[var(--color-red-500)]',
+    gray: 'text-[var(--color-gray-200)]',
   },
 };
 
