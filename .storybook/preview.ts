@@ -1,4 +1,6 @@
 import type { Preview } from '@storybook/nextjs-vite';
+
+// @ts-expect-error - Storybook에서 글로벌 CSS를 불러올 때 발생하는 타입 오류 무시
 import '../src/app/globals.css';
 
 const preview: Preview = {
