@@ -1,6 +1,6 @@
 interface SectionProps {
   children: React.ReactNode;
-  className?: String;
+  className?: string;
 }
 
 export function Section({ children, className }: SectionProps) {
