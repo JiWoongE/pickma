@@ -4,11 +4,11 @@ language: 'ko-KR'
 reviews:
   profile: 'assertive'
   request_changes_workflow: true # 지적사항이 있으면 CHANGES_REQUESTED 상태로 제출
+  collapse_walkthrough: false # walkthrough는 접힌 상태로
 
   # 불필요한 부가 기능 비활성화
   high_level_summary: false # PR description 자동 수정 금지
   poem: false # 시(poem) 생성 금지
-  collapse_walkthrough: true # walkthrough는 접힌 상태로
 
   auto_review:
     enabled: true
@@ -68,7 +68,7 @@ reviews:
         - any 타입 사용 절대 금지
         - 컴포넌트당 하나의 파일 원칙 (하나의 파일에 여러 컴포넌트 export 금지)
         - 인라인 스타일(style={{...}}) 금지 — Tailwind CSS 유틸리티 클래스만 사용
-        - UI 컴포넌트는 Headless UI 사용 (shadcn/ui import 금지)
+        - UI 컴포넌트는 Headless UI 사용
         - Headless UI 컴포넌트(Dialog, Listbox, Combobox 등)에 Tailwind로 스타일 직접 적용하는가
         - Props 인터페이스는 파일 상단에 정의
         - React 이벤트 핸들러는 handle 접두사 (handleClick, handleSubmit 등)
