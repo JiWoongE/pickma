@@ -1,0 +1,137 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: 'ko-KR'
+
+reviews:
+  profile: 'assertive'
+  request_changes_workflow: true # 지적사항이 있으면 CHANGES_REQUESTED 상태로 제출
+
+  # 불필요한 부가 기능 비활성화
+  high_level_summary: false # PR description 자동 수정 금지
+  poem: false # 시(poem) 생성 금지
+  collapse_walkthrough: true # walkthrough는 접힌 상태로
+
+  auto_review:
+    enabled: true
+    drafts: false
+
+  path_filters:
+    - '!dist/**'
+    - '!node_modules/**'
+    - '!*.lock'
+    - '!package-lock.json'
+    - '!docs/**'
+    - '!design/**'
+    - '!.claude/**'
+    - '!.github/instructions/**'
+    - '!.github/scripts/**'
+    - '!AGENTS.md'
+
+  path_instructions:
+    - path: 'src/types/**'
+      instructions: |
+        ## 타입 정의 검토 기준
+        - any 타입 사용 절대 금지
+        - 모든 필드는 명시적으로 타입 선언 (암묵적 추론에만 의존 금지)
+        - interface vs type alias 선택이 의도에 맞는지 (확장 가능성 여부)
+        - 도메인 enum 값 준수:
+          - 사용자 역할: customer | seller | admin
+          - 주문 상태: reserved | ready | completed | cancelled | no_show
+          - 가게 상태: pending | approved | rejected | suspended
+          - 상품 상태: active | soldout | expired | hidden
+          - 결제 수단: card | kakao | naver | toss
+          - 결제 상태: pending | completed | failed | refunded
+
+    - path: 'src/lib/**'
+      instructions: |
+        ## 유틸리티 검토 기준
+        - any 타입 사용 절대 금지
+        - 순수 함수 지향 (사이드 이펙트 최소화)
+        - Supabase 클라이언트 (src/lib/supabase/):
+          - 서버용/클라이언트용 클라이언트가 명확하게 분리되어 있는가
+          - 서버용 클라이언트는 Server Component, API Route, Server Action에서만 사용
+          - 클라이언트용 클라이언트는 Client Component에서만 사용
+          - SUPABASE_SERVICE_ROLE_KEY 가 클라이언트 번들에 노출되지 않는가
+
+    - path: 'src/stores/**'
+      instructions: |
+        ## Zustand 스토어 검토 기준
+        - any 타입 사용 절대 금지
+        - 액션 네이밍: set(상태변경), toggle(토글), reset(초기화), fetch(데이터가져오기)
+          — update/change/modify/get/load/clear/init 금지
+        - 파생 상태(derived state)는 selector로 분리하고 있는가
+        - store → components 역방향 import가 없는가 (스토어가 컴포넌트를 알면 안 됨)
+        - 불필요한 리렌더링을 유발할 수 있는 객체/배열 참조 변경이 있는가
+
+    - path: 'src/components/**'
+      instructions: |
+        ## 컴포넌트 검토 기준
+        - any 타입 사용 절대 금지
+        - 컴포넌트당 하나의 파일 원칙 (하나의 파일에 여러 컴포넌트 export 금지)
+        - 인라인 스타일(style={{...}}) 금지 — Tailwind CSS 유틸리티 클래스만 사용
+        - UI 컴포넌트는 Headless UI 사용 (shadcn/ui import 금지)
+        - Headless UI 컴포넌트(Dialog, Listbox, Combobox 등)에 Tailwind로 스타일 직접 적용하는가
+        - Props 인터페이스는 파일 상단에 정의
+        - React 이벤트 핸들러는 handle 접두사 (handleClick, handleSubmit 등)
+        - 접근성: 인터랙티브 요소에 적절한 role, aria 속성이 있는가
+        - 역할별 컴포넌트 격리: consumer/, seller/, admin/ 컴포넌트가 서로 직접 import 금지
+
+    - path: 'src/app/(consumer)/**'
+      instructions: |
+        ## 소비자 페이지 검토 기준
+        - 퍼블릭 페이지 (/, /search, /products/[id]): 비로그인 접근 가능한가
+        - 보호 페이지 (/order/[productId], /payment, /mypage/**): 미로그인 시 /login 리다이렉트 확인
+        - 상품 목록: 마감 시간(end_time)이 지난 상품이 노출되지 않는가
+        - 재고(stock) 0 이하인 상품에 예약 요청을 보낼 수 없는가
+        - 결제 플로우 순서: 주문 생성 → 토스페이먼츠 위젯 → 서버 측 결제 승인 (/api/payments)
+
+    - path: 'src/app/(seller)/**'
+      instructions: |
+        ## 판매자 페이지 검토 기준
+        - 미로그인/미승인 판매자가 /seller/dashboard, /seller/products, /seller/orders, /seller/store에 접근 불가한가
+        - 승인 대기(pending) 사용자는 /seller/pending으로만 리다이렉트되는가
+        - 상품 CRUD: 본인 가게(store_id) 상품만 수정/삭제 가능한가
+        - 픽업 완료·노쇼 처리: 본인 가게 주문만 처리 가능한가
+        - 예약이 존재하는 상품(reserved/ready 주문이 있는 경우) 삭제 시도 시 거부하는가
+
+    - path: 'src/app/(admin)/**'
+      instructions: |
+        ## 관리자 페이지 검토 기준
+        - role이 admin이 아닌 사용자의 접근을 차단하는가
+        - 가게 승인 처리 시 해당 users 레코드의 role을 seller로 변경하는가
+        - 가게 거절 시 reject_reason 필드가 저장되는가
+        - 사용자 정지/활성화 처리가 users.status 필드에만 영향을 주는가
+
+    - path: 'src/app/api/**'
+      instructions: |
+        ## API Route 검토 기준
+        - any 타입 사용 절대 금지
+        - 보안: TOSS_SECRET_KEY, SUPABASE_SERVICE_ROLE_KEY 등 환경 변수 값을 응답 body에 절대 포함하지 않는가
+        - 보안: 에러 응답에 스택 트레이스, 내부 경로 등 민감 정보 포함 금지
+        - 외부 API 호출 실패 시 적절한 HTTP 상태 코드로 응답하는가 (500 남발 금지)
+        - 결제 API (/api/payments):
+          - 결제 승인은 반드시 서버에서 토스페이먼츠 API를 직접 호출하는가
+          - 클라이언트가 전달한 결제 금액을 DB의 주문 금액과 대조 검증하는가 (금액 위변조 방지)
+          - 결제 완료 후 재고 차감(stock 감소)과 주문 상태 변경(reserved)이 원자적으로 처리되는가
+        - 주문 API (/api/orders):
+          - 재고 부족 시 예약을 거부하는가
+          - 주문 상태 전이가 올바른가: reserved → ready → completed, cancelled, no_show
+
+    - path: 'src/middleware.ts'
+      instructions: |
+        ## 미들웨어 권한 체크 검토 기준
+        - /seller/dashboard/**, /seller/products/**, /seller/orders/**, /seller/store/**:
+          로그인 여부 확인 → 가게 승인 여부(stores.status === 'approved') 확인
+        - /admin/**:
+          로그인 여부 확인 → users.role === 'admin' 확인
+        - 미인증/권한 부족 요청은 적절한 경로로 리다이렉트하는가
+        - Supabase 세션 갱신(refreshSession)이 미들웨어에서 올바르게 처리되는가
+        - 미들웨어에서 DB를 직접 조회할 때 서비스 역할 키가 클라이언트에 노출되지 않는가
+
+  finishing_touches:
+    docstrings:
+      enabled: false
+    unit_tests:
+      enabled: false
+
+chat:
+  auto_reply: true

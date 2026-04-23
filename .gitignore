@@ -48,3 +48,11 @@ node_modules/
 
 *storybook.log
 storybook-static
+
+# AI agent files and directories
+.claude/*
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.codex/*
+.cursorrules
