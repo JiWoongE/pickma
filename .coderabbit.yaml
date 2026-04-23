@@ -4,7 +4,7 @@ language: 'ko-KR'
 reviews:
   profile: 'assertive'
   request_changes_workflow: true # 지적사항이 있으면 CHANGES_REQUESTED 상태로 제출
-  collapse_walkthrough: false # walkthrough는 접힌 상태로
+  collapse_walkthrough: false
 
   # 불필요한 부가 기능 비활성화
   high_level_summary: false # PR description 자동 수정 금지
@@ -22,8 +22,10 @@ reviews:
     - '!docs/**'
     - '!design/**'
     - '!.claude/**'
-    - '!.github/instructions/**'
-    - '!.github/scripts/**'
+    - '!.vscode/**'
+    - '!.cursorrules'
+    - '!.codex/**'
+    - '!*.md'
     - '!AGENTS.md'
 
   path_instructions:
