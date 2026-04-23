@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -39,3 +37,22 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
+
+*storybook.log
+storybook-static
+
+# AI agent files and directories
+.claude/*
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.codex/*
+.cursorrules
