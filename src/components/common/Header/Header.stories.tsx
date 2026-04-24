@@ -26,6 +26,7 @@ export const Customer: Story = {
       provider: 'google',
       role: 'customer',
     },
+    logoHref: '/',
     slot: <SearchInput />,
     menuItems: [
       { label: '내 예약', type: 'link', href: '/reservations' },
@@ -44,6 +45,7 @@ export const CustomerWithAvatar: Story = {
       role: 'customer',
       profileImageUrl: '/images/logo.svg',
     },
+    logoHref: '/',
     slot: <SearchInput />,
     menuItems: [
       { label: '내 예약', type: 'link', href: '/reservations' },
@@ -61,6 +63,7 @@ export const Seller: Story = {
       provider: 'google',
       role: 'seller',
     },
+    logoHref: '/seller',
     menuItems: [
       { label: '가게 관리', type: 'link', href: '/seller' },
       { label: '로그아웃', type: 'action', onClick: fn() },
@@ -77,6 +80,7 @@ export const Admin: Story = {
       provider: 'google',
       role: 'admin',
     },
+    logoHref: '/admin',
     menuItems: [
       { label: '관리자 대시보드', type: 'link', href: '/admin' },
       { label: '로그아웃', type: 'action', onClick: fn() },
@@ -87,11 +91,20 @@ export const Admin: Story = {
 export const Guest: Story = {
   args: {
     user: null,
+    logoHref: '/',
     slot: <SearchInput />,
     menuItems: [
       { label: '판매자 등록', type: 'link', href: '/seller/register' },
       { label: '회원가입', type: 'link', href: '/signup' },
       { label: '로그인', type: 'action', onClick: fn() },
     ],
+  },
+};
+
+export const WithoutLogoLink: Story = {
+  args: {
+    user: null,
+    slot: <SearchInput />,
+    menuItems: [{ label: '로그인', type: 'action', onClick: fn() }],
   },
 };

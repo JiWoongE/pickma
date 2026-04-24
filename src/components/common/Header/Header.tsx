@@ -26,21 +26,31 @@ type HeaderMenuItem =
 
 interface HeaderProps {
   user: User | null;
+  logoHref?: string;
   menuItems?: HeaderMenuItem[];
   slot?: React.ReactNode;
 }
 
-export function Header({ user, menuItems, slot }: HeaderProps) {
+export function Header({ user, logoHref, menuItems, slot }: HeaderProps) {
   return (
     <header className="w-full grid grid-cols-[auto_1fr_auto] items-center px-12 py-4 border-b border-gray-200">
-      <Logo />
+      {logoHref ? (
+        <Link href={logoHref} aria-label="홈으로 이동">
+          <Logo />
+        </Link>
+      ) : (
+        <Logo />
+      )}
       <div className="flex justify-center">{slot}</div>
       <RightSection user={user} menuItems={menuItems} />
     </header>
   );
 }
 
-function RightSection({ user, menuItems }: Omit<HeaderProps, 'slot'>) {
+function RightSection({
+  user,
+  menuItems,
+}: Omit<HeaderProps, 'slot' | 'logoHref'>) {
   if (user) {
     return <UserMenu user={user} menuItems={menuItems || []} />;
   } else {
@@ -85,7 +95,7 @@ function UserMenu({
     return (
       <span className="px-4 py-2 flex items-center gap-2">
         <ProfileAvatar user={user} />
-        {user.name}님
+        {user.name}
       </span>
     );
   }
@@ -95,7 +105,7 @@ function UserMenu({
       <Menu>
         <MenuButton className="px-4 py-2 flex items-center gap-2 group rounded-sm focus:outline-none headlessui-focus-visible:ring-2 headlessui-focus-visible:ring-primary-500 headlessui-focus-visible:ring-offset-2">
           <ProfileAvatar user={user} />
-          {user.name}님
+          {user.name}
           <ChevronDownIcon className="w-4 h-4 group-data-active:hidden" />
           <ChevronUpIcon className="w-4 h-4 hidden group-data-active:block" />
         </MenuButton>
