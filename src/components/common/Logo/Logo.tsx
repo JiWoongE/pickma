@@ -8,6 +8,8 @@ export default function Logo({ size = 'lg' }: LogoProps) {
   return (
     <div className="flex flex-row items-end gap-2">
       <LogoIcon
+        aria-hidden="true"
+        focusable="false"
         className={
           size === 'lg' ? 'w-12 h-12' : size === 'md' ? 'w-10 h-10' : 'w-8 h-8'
         }
