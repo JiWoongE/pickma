@@ -96,8 +96,8 @@ function UserMenu({
         <MenuButton className="px-4 py-2 flex items-center gap-2 group focus:outline-none">
           <ProfileAvatar user={user} />
           {user.name}님
-          <ChevronDownIcon className="w-4 h-4 group-data-open:hidden" />
-          <ChevronUpIcon className="w-4 h-4 hidden group-data-open:block" />
+          <ChevronDownIcon className="w-4 h-4 group-data-active:hidden" />
+          <ChevronUpIcon className="w-4 h-4 hidden group-data-active:block" />
         </MenuButton>
         <MenuItems className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg focus:outline-none">
           {menuItems.map((item) =>
