@@ -61,7 +61,7 @@ export function Input({
         <span
           id={errorId}
           role="alert"
-          className="text-sm text-[--color-error]"
+          className="text-sm text-[var(--color-error)]"
         >
           {error}
         </span>
