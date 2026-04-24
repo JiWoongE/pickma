@@ -30,8 +30,10 @@
   --color-gray-700: #374151;
   --color-gray-900: #111827;
 
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+
   --color-success: #22a45d;
-  --color-error: #ef4444;
   --color-warning: #f59e0b;
 
   --radius-sm: 6px;
