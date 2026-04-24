@@ -114,6 +114,7 @@ function UserMenu({
               <MenuItem
                 key={item.label}
                 as="button"
+                type="button"
                 onClick={item.onClick}
                 className={`block w-full text-left px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
               >
