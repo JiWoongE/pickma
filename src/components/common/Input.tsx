@@ -1,3 +1,9 @@
+import {
+  Field,
+  Label,
+  Input as HeadlessInput,
+  Description,
+} from '@headlessui/react';
 import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -23,11 +29,11 @@ export function Input({
   const mergedAriaInvalid = props['aria-invalid'] ?? Boolean(error);
 
   return (
-    <div className="flex flex-col gap-1">
+    <Field className="flex flex-col gap-1">
       {label && (
-        <label htmlFor={inputId} className="text-sm text-gray-500">
+        <Label htmlFor={inputId} className="text-sm text-gray-500">
           {label}
-        </label>
+        </Label>
       )}
       <div className="relative">
         {startIcon && (
@@ -38,7 +44,7 @@ export function Input({
             {startIcon}
           </div>
         )}
-        <input
+        <HeadlessInput
           {...props}
           id={inputId}
           aria-invalid={mergedAriaInvalid}
@@ -58,14 +64,14 @@ export function Input({
         )}
       </div>
       {error && (
-        <span
+        <Description
           id={errorId}
           role="alert"
           className="text-sm text-[var(--color-error)]"
         >
           {error}
-        </span>
+        </Description>
       )}
-    </div>
+    </Field>
   );
 }
