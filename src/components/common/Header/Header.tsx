@@ -5,8 +5,9 @@ import { ChevronDownIcon, ChevronUpIcon, UserIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import LogoIcon from '@/assets/logo.svg?react';
 import { User } from '@/types/types';
+
+import Logo from '../Logo/Logo';
 
 type MenuItem =
   | {
@@ -38,15 +39,6 @@ export default function Header({ user, menuItems, slot }: HeaderProps) {
   );
 }
 
-function Logo() {
-  return (
-    <div className="flex flex-row items-end gap-2">
-      <LogoIcon className="w-12 h-12" />
-      <h1 className="text-primary-600 font-bold text-3xl">픽마</h1>
-    </div>
-  );
-}
-
 function RightSection({ user, menuItems }: Omit<HeaderProps, 'slot'>) {
   if (user) {
     return (
@@ -61,7 +53,7 @@ function RightSection({ user, menuItems }: Omit<HeaderProps, 'slot'>) {
 
 function GuestMenu({ menuItems }: { menuItems: MenuItem[] }) {
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-1">
       {menuItems.map((item, index) => {
         if (item.type === 'action') {
           // TODO: 버튼 컴포넌트를 공용 컴포넌트로 교체
