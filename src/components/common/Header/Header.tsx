@@ -32,9 +32,9 @@ interface HeaderProps {
 
 export function Header({ user, menuItems, slot }: HeaderProps) {
   return (
-    <header className="w-full flex flex-row justify-between items-center px-12 py-4 border-b border-gray-200">
+    <header className="w-full grid grid-cols-[auto_1fr_auto] items-center px-12 py-4 border-b border-gray-200">
       <Logo />
-      {slot}
+      <div className="flex justify-center">{slot}</div>
       <RightSection user={user} menuItems={menuItems} />
     </header>
   );
@@ -93,7 +93,7 @@ function UserMenu({
   return (
     <div className="relative">
       <Menu>
-        <MenuButton className="px-4 py-2 flex items-center gap-2 group rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2">
+        <MenuButton className="px-4 py-2 flex items-center gap-2 group rounded-sm focus:outline-none">
           <ProfileAvatar user={user} />
           {user.name}님
           <ChevronDownIcon className="w-4 h-4 group-data-active:hidden" />
