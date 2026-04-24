@@ -93,7 +93,7 @@ function UserMenu({
   return (
     <div className="relative">
       <Menu>
-        <MenuButton className="px-4 py-2 flex items-center gap-2 group focus:outline-none">
+        <MenuButton className="px-4 py-2 flex items-center gap-2 group rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2">
           <ProfileAvatar user={user} />
           {user.name}님
           <ChevronDownIcon className="w-4 h-4 group-data-active:hidden" />
@@ -106,7 +106,7 @@ function UserMenu({
                 key={item.label}
                 as={Link}
                 href={item.href}
-                className={`block px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
+                className={`block px-4 py-2 hover:bg-gray-100 data-focus:bg-gray-100 ${item.className || ''}`}
               >
                 {item.label}
               </MenuItem>
@@ -116,7 +116,7 @@ function UserMenu({
                 as="button"
                 type="button"
                 onClick={item.onClick}
-                className={`block w-full text-left px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
+                className={`block w-full text-left px-4 py-2 hover:bg-gray-100 data-focus:bg-gray-100 ${item.className || ''}`}
               >
                 {item.label}
               </MenuItem>
