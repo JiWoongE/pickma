@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       rule.test?.test?.('.svg')
     );
 
+    if (!fileLoaderRule) {
+      return config;
+    }
+
     // svg 처리 방식 재정의
     config.module.rules.push(
       {
