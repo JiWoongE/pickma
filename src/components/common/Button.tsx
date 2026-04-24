@@ -10,14 +10,14 @@ interface ButtonProps extends Omit<
 }
 
 const baseStyles =
-  'inline-flex items-center justify-center rounded-sm border px-4 py-2 font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
+  'inline-flex items-center justify-center rounded-sm border px-4 py-2 font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:bg-gray-400';
 
 const variantStyles = {
   filled: {
     primary:
       'border-transparent bg-primary-500 text-white hover:bg-primary-600',
     danger: 'border-transparent bg-red-500 text-white hover:bg-red-600',
-    gray: 'border-transparent bg-gray-500 text-gray-900 hover:bg-gray-600',
+    gray: 'border-transparent bg-gray-300 text-gray-900 hover:bg-gray-600',
   },
   outline: {
     primary: 'border-primary-500 text-primary-500 hover:bg-primary-50',
