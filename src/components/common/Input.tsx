@@ -18,6 +18,9 @@ export function Input({
   const generatedId = useId();
   const inputId = props.id ?? generatedId;
   const errorId = error ? `${inputId}-error` : undefined;
+  const mergedAriaDescribedBy =
+    [props['aria-describedby'], errorId].filter(Boolean).join(' ') || undefined;
+  const mergedAriaInvalid = props['aria-invalid'] ?? Boolean(error);
 
   return (
     <div className="flex flex-col gap-1">
@@ -36,14 +39,14 @@ export function Input({
           </div>
         )}
         <input
-          id={inputId}
-          aria-invalid={Boolean(error)}
-          aria-describedby={errorId}
-          className={`w-full border border-gray-200 rounded-[var(--radius-md)] py-2 text-sm outline-none focus:border-primary-500 placeholder:text-gray-300
-                        ${startIcon ? 'pl-9' : 'pl-4'}
-                        ${endIcon ? 'pr-9' : 'pr-4'}
-                        ${className ?? ''}`}
           {...props}
+          id={inputId}
+          aria-invalid={mergedAriaInvalid}
+          aria-describedby={mergedAriaDescribedBy}
+          className={`w-full border border-gray-200 rounded-[var(--radius-md)] py-2 text-sm outline-none focus:border-primary-500 placeholder:text-gray-300
+            ${startIcon ? 'pl-9' : 'pl-4'}
+            ${endIcon ? 'pr-9' : 'pr-4'}
+            ${className ?? ''}`}
         />
         {endIcon && (
           <div
@@ -58,7 +61,7 @@ export function Input({
         <span
           id={errorId}
           role="alert"
-          className="text-sm text-[var(--color-error)]"
+          className="text-sm text-[--color-error]"
         >
           {error}
         </span>
