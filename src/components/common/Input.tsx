@@ -1,4 +1,4 @@
-import type { InputHTMLAttributes, ReactNode } from 'react';
+import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -15,16 +15,30 @@ export function Input({
   endIcon,
   ...props
 }: InputProps) {
+  const generatedId = useId();
+  const inputId = props.id ?? generatedId;
+  const errorId = error ? `${inputId}-error` : undefined;
+
   return (
     <div className="flex flex-col gap-1">
-      {label && <label className="text-sm text-gray-500">{label}</label>}
+      {label && (
+        <label htmlFor={inputId} className="text-sm text-gray-500">
+          {label}
+        </label>
+      )}
       <div className="relative">
         {startIcon && (
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <div
+            aria-hidden="true"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+          >
             {startIcon}
           </div>
         )}
         <input
+          id={inputId}
+          aria-invalid={Boolean(error)}
+          aria-describedby={errorId}
           className={`w-full border border-gray-200 rounded-[var(--radius-md)] py-2 text-sm outline-none focus:border-primary-500 placeholder:text-gray-300
                         ${startIcon ? 'pl-9' : 'pl-4'}
                         ${endIcon ? 'pr-9' : 'pr-4'}
@@ -32,13 +46,22 @@ export function Input({
           {...props}
         />
         {endIcon && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">
+          <div
+            aria-hidden="true"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+          >
             {endIcon}
           </div>
         )}
       </div>
       {error && (
-        <span className="text-sm text-[var(--color-error)]">{error}</span>
+        <span
+          id={errorId}
+          role="alert"
+          className="text-sm text-[var(--color-error)]"
+        >
+          {error}
+        </span>
       )}
     </div>
   );
