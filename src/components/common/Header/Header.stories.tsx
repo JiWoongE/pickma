@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
 
-import Header from './Header';
+import { Header } from './Header';
 
 function SearchInput() {
   return <input type="search" placeholder="상품 검색" />;
@@ -25,6 +25,24 @@ export const Customer: Story = {
       email: 'customer@example.com',
       provider: 'google',
       role: 'customer',
+    },
+    slot: <SearchInput />,
+    menuItems: [
+      { label: '내 예약', type: 'link', href: '/reservations' },
+      { label: '로그아웃', type: 'action', onClick: fn() },
+    ],
+  },
+};
+
+export const CustomerWithAvatar: Story = {
+  args: {
+    user: {
+      id: '1',
+      name: '홍길동',
+      email: 'customer@example.com',
+      provider: 'google',
+      role: 'customer',
+      profileImageUrl: '/images/logo.svg',
     },
     slot: <SearchInput />,
     menuItems: [
