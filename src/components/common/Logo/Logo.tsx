@@ -14,7 +14,7 @@ export default function Logo({ size = 'lg' }: LogoProps) {
           size === 'lg' ? 'w-12 h-12' : size === 'md' ? 'w-10 h-10' : 'w-8 h-8'
         }
       />
-      <h1
+      <span
         className={
           size === 'lg'
             ? 'text-primary-600 font-bold text-3xl'
@@ -24,7 +24,7 @@ export default function Logo({ size = 'lg' }: LogoProps) {
         }
       >
         픽마
-      </h1>
+      </span>
     </div>
   );
 }
