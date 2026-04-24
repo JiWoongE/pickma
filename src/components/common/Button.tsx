@@ -1,27 +1,32 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'style'
+> {
   children: ReactNode;
   variant?: 'filled' | 'outline' | 'ghost';
   color?: 'primary' | 'danger' | 'gray';
 }
 
+const baseStyles =
+  'inline-flex items-center justify-center rounded-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:pointer-events-none disabled:bg-gray-200 disabled:text-gray-400 disabled:border-gray-200';
+
 const variantStyles = {
   filled: {
-    primary: 'bg-[var(--color-primary-500)] text-white',
-    danger: 'bg-[var(--color-red-500)] text-white',
-    gray: 'bg-[var(--color-gray-500)] text-[var(--color-gray-900)]',
+    primary: 'bg-primary-500 text-white',
+    danger: 'bg-error text-white',
+    gray: 'bg-gray-500 text-gray-900',
   },
   outline: {
-    primary:
-      'border border-[var(--color-primary-500)] text-[var(--color-primary-500)]',
-    danger: 'border border-[var(--color-red-500)] text-[var(--color-red-500)]',
-    gray: 'border border-[var(--color-gray-500)] text-[var(--color-gray-500)]',
+    primary: 'border border-primary-500 text-primary-500',
+    danger: 'border border-error text-error',
+    gray: 'border border-gray-500 text-gray-500',
   },
   ghost: {
-    primary: 'text-[var(--color-primary-500)]',
-    danger: 'text-[var(--color-red-500)]',
-    gray: 'text-[var(--color-gray-500)]',
+    primary: 'text-primary-500',
+    danger: 'text-error',
+    gray: 'text-gray-500',
   },
 };
 
@@ -38,7 +43,7 @@ export function Button({
   return (
     <button
       type={type}
-      className={`inline-flex items-center justify-center rounded-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${style} ${className ?? ''}`}
+      className={`${baseStyles} ${style} ${className ?? ''}`}
       {...props}
     >
       {children}
