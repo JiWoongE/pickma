@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 import { User } from '@/types/user';
 
+import { Button } from '../Button/Button';
 import Logo from '../Logo/Logo';
 
 type HeaderMenuItem =
@@ -41,11 +42,7 @@ export function Header({ user, menuItems, slot }: HeaderProps) {
 
 function RightSection({ user, menuItems }: Omit<HeaderProps, 'slot'>) {
   if (user) {
-    return (
-      <div className="relative">
-        <UserMenu user={user} menuItems={menuItems || []} />
-      </div>
-    );
+    return <UserMenu user={user} menuItems={menuItems || []} />;
   } else {
     return <GuestMenu menuItems={menuItems || []} />;
   }
@@ -54,30 +51,25 @@ function RightSection({ user, menuItems }: Omit<HeaderProps, 'slot'>) {
 function GuestMenu({ menuItems }: { menuItems: HeaderMenuItem[] }) {
   return (
     <div className="flex space-x-1">
-      {menuItems.map((item) => {
-        if (item.type === 'action') {
-          // TODO: 버튼 컴포넌트를 공용 컴포넌트로 교체
-          return (
-            <button
-              key={item.label}
-              className={`px-4 py-2 text-primary-500 rounded hover:bg-primary-50 transition ${item.className || ''}`}
-              onClick={item.onClick}
-            >
-              {item.label}
-            </button>
-          );
-        } else if (item.type === 'link') {
-          return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`px-4 py-2 text-primary-500 rounded hover:bg-primary-50 transition ${item.className || ''}`}
-            >
-              {item.label}
-            </Link>
-          );
-        }
-      })}
+      {menuItems.map((item) =>
+        item.type === 'action' ? (
+          <Button
+            key={item.label}
+            className={`px-4 py-2 text-primary-500 rounded hover:bg-primary-50 transition ${item.className || ''}`}
+            onClick={item.onClick}
+          >
+            {item.label}
+          </Button>
+        ) : (
+          <Link
+            key={item.label}
+            href={item.href}
+            className={`px-4 py-2 text-primary-500 rounded hover:bg-primary-50 transition ${item.className || ''}`}
+          >
+            {item.label}
+          </Link>
+        )
+      )}
     </div>
   );
 }
@@ -99,37 +91,39 @@ function UserMenu({
   }
 
   return (
-    <Menu>
-      <MenuButton className="px-4 py-2 flex items-center gap-2 group focus:outline-none">
-        <ProfileAvatar user={user} />
-        {user.name}님
-        <ChevronDownIcon className="w-4 h-4 group-data-open:hidden" />
-        <ChevronUpIcon className="w-4 h-4 hidden group-data-open:block" />
-      </MenuButton>
-      <MenuItems className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg focus:outline-none">
-        {menuItems.map((item) =>
-          item.type === 'link' ? (
-            <MenuItem
-              key={item.label}
-              as={Link}
-              href={item.href}
-              className={`block px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
-            >
-              {item.label}
-            </MenuItem>
-          ) : (
-            <MenuItem
-              key={item.label}
-              as="button"
-              onClick={item.onClick}
-              className={`block w-full text-left px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
-            >
-              {item.label}
-            </MenuItem>
-          )
-        )}
-      </MenuItems>
-    </Menu>
+    <div className="relative">
+      <Menu>
+        <MenuButton className="px-4 py-2 flex items-center gap-2 group focus:outline-none">
+          <ProfileAvatar user={user} />
+          {user.name}님
+          <ChevronDownIcon className="w-4 h-4 group-data-open:hidden" />
+          <ChevronUpIcon className="w-4 h-4 hidden group-data-open:block" />
+        </MenuButton>
+        <MenuItems className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg focus:outline-none">
+          {menuItems.map((item) =>
+            item.type === 'link' ? (
+              <MenuItem
+                key={item.label}
+                as={Link}
+                href={item.href}
+                className={`block px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
+              >
+                {item.label}
+              </MenuItem>
+            ) : (
+              <MenuItem
+                key={item.label}
+                as="button"
+                onClick={item.onClick}
+                className={`block w-full text-left px-4 py-2 hover:bg-gray-100 ${item.className || ''}`}
+              >
+                {item.label}
+              </MenuItem>
+            )
+          )}
+        </MenuItems>
+      </Menu>
+    </div>
   );
 }
 
