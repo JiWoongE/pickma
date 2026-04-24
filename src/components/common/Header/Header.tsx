@@ -65,7 +65,8 @@ function GuestMenu({ menuItems }: { menuItems: HeaderMenuItem[] }) {
         item.type === 'action' ? (
           <Button
             key={item.label}
-            className={`px-4 py-2 text-primary-500 rounded hover:bg-primary-50 transition ${item.className || ''}`}
+            variant="ghost"
+            className={`rounded ${item.className || ''}`}
             onClick={item.onClick}
           >
             {item.label}
