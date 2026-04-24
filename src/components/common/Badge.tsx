@@ -1,4 +1,4 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 /**
  * Badge 컴포넌트
@@ -21,7 +21,7 @@ import { HTMLAttributes, ReactNode } from 'react';
  *
  */
 
-interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'> {
+interface BadgeProps {
   children: ReactNode;
   variant?: 'solid' | 'soft';
   color?:
@@ -32,10 +32,11 @@ interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'> {
     | 'danger'
     | 'gray'
     | 'dark';
+  rounded?: 'full' | 'md';
+  className?: string;
 }
 
-const baseStyles =
-  'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold';
+const baseStyles = 'inline-flex items-center px-2 py-0.5 text-xs font-semibold';
 
 const variantStyles = {
   solid: {
@@ -59,16 +60,22 @@ const variantStyles = {
   },
 };
 
+const roundedStyles = {
+  full: 'rounded-full',
+  md: 'rounded-md',
+};
+
 export function Badge({
   children,
   variant = 'soft',
   color = 'primary',
+  rounded = 'full',
   className = '',
   ...props
 }: BadgeProps) {
   return (
     <span
-      className={`${baseStyles}  ${variantStyles[variant][color]} ${className ?? ''}`}
+      className={`${baseStyles} ${variantStyles[variant][color]} ${roundedStyles[rounded]} ${className}`}
       {...props}
     >
       {children}
