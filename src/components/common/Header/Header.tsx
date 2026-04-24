@@ -134,8 +134,9 @@ function ProfileAvatar({ user }: { user: User }) {
       {user.profileImageUrl ? (
         <Image
           src={user.profileImageUrl}
-          alt="프로필 이미지"
+          alt=""
           fill
+          sizes="32px"
           className="object-cover"
         />
       ) : (
