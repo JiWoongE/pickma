@@ -19,7 +19,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom */}
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-sm text-gray-500 md:flex-row">
           <small>© 2026 PickMa. All rights reserved.</small>
           <SocialLinks />
