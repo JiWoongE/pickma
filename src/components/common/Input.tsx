@@ -1,10 +1,11 @@
+import { cn } from '@/lib/utils';
 import {
   Field,
   Label,
   Input as HeadlessInput,
   Description,
 } from '@headlessui/react';
-import { useId, type InputHTMLAttributes, type ReactNode } from 'react';
+import { type InputHTMLAttributes, type ReactNode } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -21,20 +22,9 @@ export function Input({
   endIcon,
   ...props
 }: InputProps) {
-  const generatedId = useId();
-  const inputId = props.id ?? generatedId;
-  const errorId = error ? `${inputId}-error` : undefined;
-  const mergedAriaDescribedBy =
-    [props['aria-describedby'], errorId].filter(Boolean).join(' ') || undefined;
-  const mergedAriaInvalid = props['aria-invalid'] ?? Boolean(error);
-
   return (
     <Field className="flex flex-col gap-1">
-      {label && (
-        <Label htmlFor={inputId} className="text-sm text-gray-500">
-          {label}
-        </Label>
-      )}
+      {label && <Label className="text-sm text-gray-500">{label}</Label>}
       <div className="relative">
         {startIcon && (
           <div
@@ -46,13 +36,15 @@ export function Input({
         )}
         <HeadlessInput
           {...props}
-          id={inputId}
-          aria-invalid={mergedAriaInvalid}
-          aria-describedby={mergedAriaDescribedBy}
-          className={`w-full border border-gray-200 rounded-[var(--radius-md)] py-2 text-sm outline-none focus:border-primary-500 placeholder:text-gray-300
-            ${startIcon ? 'pl-9' : 'pl-4'}
-            ${endIcon ? 'pr-9' : 'pr-4'}
-            ${className ?? ''}`}
+          invalid={Boolean(error)}
+          className={cn(
+            'w-full border rounded-[10px] py-2 text-sm outline-none focus:border-primary-500 placeholder:text-gray-300',
+            'data-[invalid]:border-error border-gray-200',
+            'data-[disabled]:bg-gray-100 data-[disabled]:text-gray-400 data-[disabled]:cursor-not-allowed',
+            startIcon ? 'pl-9' : 'pl-4',
+            endIcon ? 'pr-9' : 'pr-4',
+            className
+          )}
         />
         {endIcon && (
           <div
@@ -64,11 +56,7 @@ export function Input({
         )}
       </div>
       {error && (
-        <Description
-          id={errorId}
-          role="alert"
-          className="text-sm text-[var(--color-error)]"
-        >
+        <Description aria-live="polite" className="text-sm text-error">
           {error}
         </Description>
       )}
