@@ -1,0 +1,107 @@
+'use client';
+
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
+import { ChevronDownIcon } from 'lucide-react';
+
+import { Button } from '../Button';
+
+type SelectDropdownItem = {
+  label: string;
+  value: string;
+  disabled?: boolean;
+};
+
+type ActionDropdownItem = {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+};
+
+type ButtonVariant = 'filled' | 'outline' | 'ghost';
+
+type DropdownProps =
+  | {
+      type: 'select';
+      placeholder?: string;
+      items: SelectDropdownItem[];
+      value?: string;
+      onChange: (value: string) => void;
+      buttonVariant?: ButtonVariant;
+    }
+  | {
+      type: 'action';
+      placeholder: string;
+      items: ActionDropdownItem[];
+      buttonVariant?: ButtonVariant;
+    };
+
+export function Dropdown(props: DropdownProps) {
+  const buttonLabel =
+    props.type === 'select'
+      ? (props.items.find((item) => item.value === props.value)?.label ??
+        props.placeholder ??
+        '선택')
+      : props.placeholder;
+
+  return (
+    <Menu as="div" className="relative inline-block text-left">
+      <MenuButton
+        as={Button}
+        variant={props.buttonVariant ?? 'outline'}
+        color="gray"
+      >
+        <span className="inline-flex items-center gap-2">
+          {buttonLabel}
+          <ChevronDownIcon className="h-4 w-4" />
+        </span>
+      </MenuButton>
+
+      <MenuItems className="absolute left-0 z-10 mt-2 w-44 rounded-md border border-gray-200 bg-white p-1 shadow-lg focus:outline-none">
+        {props.type === 'select'
+          ? props.items.map((item) => {
+              const isSelected = item.value === props.value;
+
+              return (
+                <MenuItem key={item.value} disabled={item.disabled}>
+                  {({ focus }) => (
+                    <button
+                      type="button"
+                      disabled={item.disabled}
+                      onClick={() => props.onChange(item.value)}
+                      className={[
+                        'block w-full rounded px-3 py-2 text-left text-sm',
+                        focus ? 'bg-gray-100' : '',
+                        isSelected
+                          ? 'font-semibold text-gray-900'
+                          : 'text-gray-700',
+                        item.disabled ? 'cursor-not-allowed opacity-50' : '',
+                      ].join(' ')}
+                    >
+                      {item.label}
+                    </button>
+                  )}
+                </MenuItem>
+              );
+            })
+          : props.items.map((item) => (
+              <MenuItem key={item.label} disabled={item.disabled}>
+                {({ focus }) => (
+                  <button
+                    type="button"
+                    disabled={item.disabled}
+                    onClick={item.onClick}
+                    className={[
+                      'block w-full rounded px-3 py-2 text-left text-sm text-gray-700',
+                      focus ? 'bg-gray-100' : '',
+                      item.disabled ? 'cursor-not-allowed opacity-50' : '',
+                    ].join(' ')}
+                  >
+                    {item.label}
+                  </button>
+                )}
+              </MenuItem>
+            ))}
+      </MenuItems>
+    </Menu>
+  );
+}
