@@ -12,33 +12,20 @@ export function BrandSection() {
         픽마에서 간편하게 픽업하세요.
       </p>
 
-      <div className="mt-12 flex items-center gap-2">
-        {/* TODO: 실제 Store 링크 */}
-        <a
-          aria-disabled="true"
-          aria-label="Google Play에서 다운로드 (준비중)"
-          className="pointer-events-none opacity-50"
-        >
-          <Image
-            src="/images/badges/google.svg"
-            alt=""
-            width={135}
-            height={40}
-          />
-        </a>
-        {/* TODO: 실제 Store 링크 */}
-        <a
-          aria-disabled="true"
-          aria-label="App Store에서 다운로드 (준비중)"
-          className="pointer-events-none opacity-50"
-        >
-          <Image
-            src="/images/badges/apple.svg"
-            alt=""
-            width={120}
-            height={40}
-          />
-        </a>
+      {/* TODO: 실제 Store 링크 확정 시 각 Image를 <a href="..." target="_blank" rel="noopener noreferrer">로 감싸고 opacity-50 제거 */}
+      <div className="mt-12 flex items-center gap-2 opacity-50">
+        <Image
+          src="/images/badges/google.svg"
+          alt="Google Play (준비중)"
+          width={135}
+          height={40}
+        />
+        <Image
+          src="/images/badges/apple.svg"
+          alt="App Store (준비중)"
+          width={120}
+          height={40}
+        />
       </div>
     </section>
   );
