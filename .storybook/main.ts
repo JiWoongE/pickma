@@ -13,8 +13,8 @@ const config: StorybookConfig = {
   framework: '@storybook/nextjs-vite',
   staticDirs: ['../public'],
 
-  async viteFinal(config) {
-    return mergeConfig(config, {
+  async viteFinal(viteConfig) {
+    return mergeConfig(viteConfig, {
       plugins: [
         svgr({
           include: '**/*.svg?react',
