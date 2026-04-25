@@ -6,12 +6,14 @@ type FooterLink = {
 };
 
 type FooterNavSection = {
+  id: string;
   title: string;
   items: FooterLink[];
 };
 
 const footerNavSections: FooterNavSection[] = [
   {
+    id: 'service',
     title: '서비스',
     items: [
       { label: '내 예약', href: '/bookings' },
@@ -21,6 +23,7 @@ const footerNavSections: FooterNavSection[] = [
     ],
   },
   {
+    id: 'partner',
     title: '파트너',
     items: [
       { label: '가게 등록', href: '/partner/register' },
@@ -30,6 +33,7 @@ const footerNavSections: FooterNavSection[] = [
     ],
   },
   {
+    id: 'company',
     title: '회사',
     items: [
       { label: '회사 소개', href: '/about' },
@@ -44,8 +48,8 @@ export function FooterGroup() {
   return (
     <div className="grid grid-cols-1 gap-6 py-10 sm:grid-cols-3 lg:col-span-7 lg:px-10 lg:py-0">
       {footerNavSections.map((section) => (
-        <nav key={section.title} aria-labelledby={`footer-${section.title}`}>
-          <h3 id={`footer-${section.title}`} className="mb-6 font-semibold">
+        <nav key={section.id} aria-labelledby={`footer-${section.id}`}>
+          <h3 id={`footer-${section.id}`} className="mb-6 font-semibold">
             {section.title}
           </h3>
           <ul className="space-y-6 text-sm font-medium text-gray-500 lg:space-y-2">
