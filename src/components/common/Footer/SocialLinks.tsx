@@ -1,10 +1,16 @@
 import { SiFacebook, SiInstagram, SiKakaotalk } from 'react-icons/si';
 
+type SocialLink = {
+  href: string | null;
+  label: string;
+  Icon: React.ComponentType<{ size?: number }>;
+};
+
 // TODO: 각 소셜 미디어 URL 확정 시 href 교체
-const SOCIAL_LINKS = [
-  { href: '#', label: '인스타그램', Icon: SiInstagram },
-  { href: '#', label: '페이스북', Icon: SiFacebook },
-  { href: '#', label: '카카오톡', Icon: SiKakaotalk },
+const SOCIAL_LINKS: SocialLink[] = [
+  { href: null, label: '인스타그램', Icon: SiInstagram },
+  { href: null, label: '페이스북', Icon: SiFacebook },
+  { href: null, label: '카카오톡', Icon: SiKakaotalk },
 ];
 
 export function SocialLinks() {
@@ -13,7 +19,7 @@ export function SocialLinks() {
       <ul className="flex gap-4">
         {SOCIAL_LINKS.map(({ href, label, Icon }) => (
           <li key={label}>
-            {href === '#' ? (
+            {href === null ? (
               <span className="inline-flex cursor-not-allowed items-center justify-center rounded-full border border-gray-200 p-2 text-gray-400 opacity-50">
                 <span aria-hidden="true">
                   <Icon size={12} />
