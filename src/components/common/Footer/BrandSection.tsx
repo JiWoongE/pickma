@@ -14,7 +14,11 @@ export function BrandSection() {
 
       <div className="mt-12 flex items-center gap-2">
         {/* TODO: 실제 Store 링크 */}
-        <a href="#" aria-label="Google Play에서 다운로드">
+        <a
+          aria-disabled="true"
+          aria-label="Google Play에서 다운로드 (준비중)"
+          className="pointer-events-none opacity-50"
+        >
           <Image
             src="/images/badges/google.svg"
             alt=""
@@ -23,7 +27,11 @@ export function BrandSection() {
           />
         </a>
         {/* TODO: 실제 Store 링크 */}
-        <a href="#" aria-label="App Store에서 다운로드">
+        <a
+          aria-disabled="true"
+          aria-label="App Store에서 다운로드 (준비중)"
+          className="pointer-events-none opacity-50"
+        >
           <Image
             src="/images/badges/apple.svg"
             alt=""
