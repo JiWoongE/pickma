@@ -7,12 +7,12 @@ export function BrandSection() {
     <section aria-label="브랜드 정보" className="flex flex-col">
       <Logo size="md" />
 
-      <p className="text-xs text-gray-600 mt-6">
+      <p className="mt-6 text-xs text-gray-600">
         동네 맛집부터 취향저격 상품까지, <br />
         픽마에서 간편하게 픽업하세요.
       </p>
 
-      <div className="flex gap-2 mt-12 items-center">
+      <div className="mt-12 flex items-center gap-2">
         {/* TODO: 실제 Store 링크 */}
         <a href="#" aria-label="Google Play에서 다운로드">
           <Image

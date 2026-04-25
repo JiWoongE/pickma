@@ -42,13 +42,13 @@ const footerNavSections: FooterNavSection[] = [
 
 export function FooterGroup() {
   return (
-    <div className="py-10 lg:px-10 lg:py-0 lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 py-10 sm:grid-cols-3 lg:col-span-7 lg:px-10 lg:py-0">
       {footerNavSections.map((section) => (
         <nav key={section.title} aria-labelledby={`footer-${section.title}`}>
-          <h3 id={`footer-${section.title}`} className="font-semibold mb-6">
+          <h3 id={`footer-${section.title}`} className="mb-6 font-semibold">
             {section.title}
           </h3>
-          <ul className="space-y-6 lg:space-y-2 text-sm text-gray-500 font-medium">
+          <ul className="space-y-6 text-sm font-medium text-gray-500 lg:space-y-2">
             {section.items.map((item) => (
               <li key={item.label}>
                 <Link href={item.href} className="hover:text-gray-800">

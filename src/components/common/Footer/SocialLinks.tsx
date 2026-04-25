@@ -18,7 +18,7 @@ export function SocialLinks() {
               aria-label={label}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center border border-gray-200 rounded-full p-2 text-gray-800"
+              className="inline-flex items-center justify-center rounded-full border border-gray-200 p-2 text-gray-800"
             >
               <span aria-hidden="true">{icon}</span>
             </a>
