@@ -14,18 +14,15 @@ export function SocialLinks() {
         {SOCIAL_LINKS.map(({ href, label, Icon }) => (
           <li key={label}>
             {href === '#' ? (
-              <span
-                aria-label={`${label} (준비중)`}
-                className="inline-flex cursor-not-allowed items-center justify-center rounded-full border border-gray-200 p-2 text-gray-400 opacity-50"
-              >
+              <span className="inline-flex cursor-not-allowed items-center justify-center rounded-full border border-gray-200 p-2 text-gray-400 opacity-50">
                 <span aria-hidden="true">
                   <Icon size={12} />
                 </span>
+                <span className="sr-only">{label} (준비중)</span>
               </span>
             ) : (
               <a
                 href={href}
-                aria-label={label}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-full border border-gray-200 p-2 text-gray-800"
@@ -33,6 +30,7 @@ export function SocialLinks() {
                 <span aria-hidden="true">
                   <Icon size={12} />
                 </span>
+                <span className="sr-only">{label}</span>
               </a>
             )}
           </li>
