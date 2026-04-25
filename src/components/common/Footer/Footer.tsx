@@ -7,17 +7,13 @@ export function Footer() {
   return (
     <footer className="mt-20 border-t border-gray-200 bg-gray-50">
       <div className="mx-auto max-w-7xl px-14 pt-10 pb-20">
-        {/* TOP */}
         <div className="grid grid-cols-1 lg:grid-cols-12">
-          {/* Brand */}
           <div className="border-b border-gray-200 pb-6 lg:col-span-3 lg:border-r lg:border-b-0 lg:pr-6 lg:pb-0">
             <BrandSection />
           </div>
 
-          {/* Center Nav Group */}
           <FooterGroup />
 
-          {/* Support */}
           <div className="lg:col-span-2">
             <SupportSection />
           </div>
