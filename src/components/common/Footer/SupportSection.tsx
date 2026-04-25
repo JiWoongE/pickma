@@ -1,4 +1,5 @@
 import { MailIcon, MessageCircleMoreIcon, PhoneCall } from 'lucide-react';
+import Link from 'next/link';
 
 export function SupportSection() {
   return (
@@ -21,7 +22,7 @@ export function SupportSection() {
           <p className="flex items-center gap-2">
             <MessageCircleMoreIcon size={16} />
             {/* TODO: 1:1 문의하기 기능 결정 */}
-            <button>1:1 문의하기</button>
+            <Link href="#">1:1 문의하기</Link>
           </p>
         </div>
       </address>
