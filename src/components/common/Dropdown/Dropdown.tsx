@@ -3,7 +3,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import { ChevronDownIcon } from 'lucide-react';
 
-import { Button } from '../Button';
+import { Button } from '../Button/Button';
 
 type SelectDropdownItem = {
   label: string;
@@ -20,23 +20,26 @@ type ActionDropdownItem = {
 
 type ButtonVariant = 'filled' | 'outline' | 'ghost';
 
-type DropdownProps =
-  | {
-      type: 'select';
-      placeholder?: string;
-      items: SelectDropdownItem[];
-      value?: string;
-      onChange: (value: string) => void;
-      buttonVariant?: ButtonVariant;
-      disabled: boolean;
-    }
-  | {
-      type: 'action';
-      placeholder: string;
-      items: ActionDropdownItem[];
-      buttonVariant?: ButtonVariant;
-      disabled: boolean;
-    };
+interface BaseDropdownProps {
+  buttonVariant?: ButtonVariant;
+  disabled?: boolean;
+}
+
+interface SelectDropdownProps extends BaseDropdownProps {
+  type: 'select';
+  placeholder?: string;
+  items: SelectDropdownItem[];
+  value?: string;
+  onChange: (value: string) => void;
+}
+
+interface ActionDropdownProps extends BaseDropdownProps {
+  type: 'action';
+  placeholder: string;
+  items: ActionDropdownItem[];
+}
+
+type DropdownProps = SelectDropdownProps | ActionDropdownProps;
 
 export function Dropdown(props: DropdownProps) {
   const buttonLabel =
@@ -70,7 +73,7 @@ export function Dropdown(props: DropdownProps) {
               };
 
               return (
-                <MenuItem key={item.label} disabled={item.disabled}>
+                <MenuItem key={item.value} disabled={item.disabled}>
                   {({ focus }) => (
                     <button
                       type="button"
@@ -91,24 +94,32 @@ export function Dropdown(props: DropdownProps) {
                 </MenuItem>
               );
             })
-          : props.items.map((item) => (
-              <MenuItem key={item.id} disabled={item.disabled}>
-                {({ focus }) => (
-                  <button
-                    type="button"
-                    disabled={item.disabled}
-                    onClick={item.onClick}
-                    className={[
-                      'block w-full rounded px-3 py-2 text-left text-sm text-gray-700',
-                      focus ? 'bg-gray-100' : '',
-                      item.disabled ? 'cursor-not-allowed opacity-50' : '',
-                    ].join(' ')}
-                  >
-                    {item.label}
-                  </button>
-                )}
-              </MenuItem>
-            ))}
+          : props.items.map((item) => {
+              const handleActionItemClick = () => {
+                if (item.disabled) return;
+
+                item.onClick();
+              };
+
+              return (
+                <MenuItem key={item.id} disabled={item.disabled}>
+                  {({ focus }) => (
+                    <button
+                      type="button"
+                      disabled={item.disabled}
+                      onClick={handleActionItemClick}
+                      className={[
+                        'block w-full rounded px-3 py-2 text-left text-sm text-gray-700',
+                        focus ? 'bg-gray-100' : '',
+                        item.disabled ? 'cursor-not-allowed opacity-50' : '',
+                      ].join(' ')}
+                    >
+                      {item.label}
+                    </button>
+                  )}
+                </MenuItem>
+              );
+            })}
       </MenuItems>
     </Menu>
   );
