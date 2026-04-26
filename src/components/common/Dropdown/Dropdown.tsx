@@ -12,6 +12,7 @@ type SelectDropdownItem = {
 };
 
 type ActionDropdownItem = {
+  id: string;
   label: string;
   onClick: () => void;
   disabled?: boolean;
@@ -27,12 +28,14 @@ type DropdownProps =
       value?: string;
       onChange: (value: string) => void;
       buttonVariant?: ButtonVariant;
+      disabled: boolean;
     }
   | {
       type: 'action';
       placeholder: string;
       items: ActionDropdownItem[];
       buttonVariant?: ButtonVariant;
+      disabled: boolean;
     };
 
 export function Dropdown(props: DropdownProps) {
@@ -49,6 +52,7 @@ export function Dropdown(props: DropdownProps) {
         as={Button}
         variant={props.buttonVariant ?? 'outline'}
         color="gray"
+        disabled={props.disabled}
       >
         <span className="inline-flex items-center gap-2">
           {buttonLabel}
@@ -60,14 +64,18 @@ export function Dropdown(props: DropdownProps) {
         {props.type === 'select'
           ? props.items.map((item) => {
               const isSelected = item.value === props.value;
+              const handleSelectItemClick = () => {
+                if (item.disabled) return;
+                props.onChange(item.value);
+              };
 
               return (
-                <MenuItem key={item.value} disabled={item.disabled}>
+                <MenuItem key={item.label} disabled={item.disabled}>
                   {({ focus }) => (
                     <button
                       type="button"
                       disabled={item.disabled}
-                      onClick={() => props.onChange(item.value)}
+                      onClick={handleSelectItemClick}
                       className={[
                         'block w-full rounded px-3 py-2 text-left text-sm',
                         focus ? 'bg-gray-100' : '',
@@ -84,7 +92,7 @@ export function Dropdown(props: DropdownProps) {
               );
             })
           : props.items.map((item) => (
-              <MenuItem key={item.label} disabled={item.disabled}>
+              <MenuItem key={item.id} disabled={item.disabled}>
                 {({ focus }) => (
                   <button
                     type="button"
