@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
 
 interface ButtonProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -31,23 +31,31 @@ const variantStyles = {
   },
 };
 
-export function Button({
-  children,
-  className,
-  type = 'button',
-  variant = 'filled',
-  color = 'primary',
-  ...props
-}: ButtonProps) {
-  const style = variantStyles[variant][color];
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      children,
+      className,
+      type = 'button',
+      variant = 'filled',
+      color = 'primary',
+      ...props
+    },
+    ref
+  ) => {
+    const style = variantStyles[variant][color];
 
-  return (
-    <button
-      type={type}
-      className={`${baseStyles} ${style} ${className ?? ''}`}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-}
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={`${baseStyles} ${style} ${className ?? ''}`}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+Button.displayName = 'Button';
