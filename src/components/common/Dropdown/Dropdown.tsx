@@ -59,7 +59,11 @@ export function Dropdown(props: DropdownProps) {
       >
         <span className="inline-flex items-center gap-2">
           {buttonLabel}
-          <ChevronDownIcon className="h-4 w-4" />
+          <ChevronDownIcon
+            aria-hidden="true"
+            focusable="false"
+            className="h-4 w-4"
+          />
         </span>
       </MenuButton>
 
