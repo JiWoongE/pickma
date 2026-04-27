@@ -72,9 +72,9 @@ export function Dropdown(props: DropdownProps) {
                   <button
                     type="button"
                     disabled={item.disabled}
-                    aria-selected={isSelected}
+                    data-selected={isSelected}
                     onClick={handleSelectItemClick}
-                    className="block w-full rounded px-3 py-2 text-left text-sm text-gray-700 aria-selected:font-semibold aria-selected:text-gray-900 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-focus:bg-gray-100"
+                    className="block w-full rounded px-3 py-2 text-left text-sm text-gray-700 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-focus:bg-gray-100 data-[selected=true]:font-semibold data-[selected=true]:text-gray-900"
                   >
                     {item.label}
                   </button>
@@ -82,16 +82,12 @@ export function Dropdown(props: DropdownProps) {
               );
             })
           : props.items.map((item) => {
-              const handleActionItemClick = () => {
-                item.onClick();
-              };
-
               return (
                 <MenuItem key={item.id} disabled={item.disabled}>
                   <button
                     type="button"
                     disabled={item.disabled}
-                    onClick={handleActionItemClick}
+                    onClick={item.onClick}
                     className="block w-full rounded px-3 py-2 text-left text-sm text-gray-700 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-focus:bg-gray-100"
                   >
                     {item.label}
