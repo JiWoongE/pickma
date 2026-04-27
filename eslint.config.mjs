@@ -4,6 +4,7 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
 import importPlugin from 'eslint-plugin-import';
+import sortExports from 'eslint-plugin-sort-exports';
 import storybook from 'eslint-plugin-storybook';
 
 const eslintConfig = defineConfig([
@@ -20,18 +21,38 @@ const eslintConfig = defineConfig([
   {
     plugins: {
       import: importPlugin,
+      'sort-exports': sortExports,
     },
   },
   {
     rules: {
+      // General
       'no-console': 'warn',
       'no-debugger': 'error',
       'no-alert': 'warn',
-      '@typescript-eslint/no-unused-vars': 'error',
-      '@typescript-eslint/no-explicit-any': 'warn',
       eqeqeq: 'error',
       'no-var': 'error',
-      'prefer-const': 'warn',
+      'prefer-const': 'error',
+      'no-nested-ternary': 'error',
+      'object-shorthand': 'warn',
+      'no-shadow': 'off', // @typescript-eslint/no-shadow로 대체
+
+      // TypeScript
+      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'warn',
+      '@typescript-eslint/no-shadow': 'error',
+      '@typescript-eslint/consistent-type-imports': [
+        'warn',
+        { prefer: 'type-imports', fixStyle: 'separate-type-imports' },
+      ],
+
+      // React
+      'react/no-array-index-key': 'warn',
+      'react/jsx-no-useless-fragment': ['warn', { allowExpressions: true }],
+      'react/self-closing-comp': 'warn',
+
+      // Import
       'import/order': [
         'warn',
         {
@@ -42,12 +63,75 @@ const eslintConfig = defineConfig([
             ['parent', 'sibling'],
             'index',
           ],
+          pathGroups: [
+            { pattern: '@/types/**', group: 'internal', position: 'before' },
+            { pattern: '@/lib/**', group: 'internal', position: 'before' },
+            { pattern: '@/stores/**', group: 'internal', position: 'before' },
+            { pattern: '@/hooks/**', group: 'internal', position: 'before' },
+            {
+              pattern: '@/components/**',
+              group: 'internal',
+              position: 'before',
+            },
+          ],
+          distinctGroup: false,
+          pathGroupsExcludedImportTypes: ['builtin'],
           'newlines-between': 'always',
           alphabetize: { order: 'asc', caseInsensitive: true },
         },
       ],
       'import/newline-after-import': 'error',
       'import/no-duplicates': 'error',
+      'import/no-cycle': 'error',
+      'import/no-restricted-paths': [
+        'error',
+        {
+          basePath: './src',
+          zones: [
+            {
+              target: './types',
+              from: ['./lib', './stores', './hooks', './components', './app'],
+            },
+            {
+              target: './lib',
+              from: ['./stores', './hooks', './components', './app'],
+            },
+            { target: './stores', from: ['./hooks', './components', './app'] },
+            { target: './hooks', from: ['./components', './app'] },
+            { target: './components', from: ['./app'] },
+          ],
+        },
+      ],
+
+      // Export
+      'sort-exports/sort-exports': [
+        'warn',
+        { sortDir: 'asc', ignoreCase: true },
+      ],
+    },
+  },
+  // stories 파일 — export 순서는 Storybook 표시 순서와 직결되므로 정렬 규칙 제외
+  {
+    files: ['**/*.stories.ts', '**/*.stories.tsx'],
+    rules: {
+      'sort-exports/sort-exports': 'off',
+    },
+  },
+  // Type-aware rules (TypeScript 파일 전용, .storybook 제외)
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    ignores: ['.storybook/**'],
+    languageOptions: {
+      parserOptions: {
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      '@typescript-eslint/prefer-optional-chain': 'warn',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/no-misused-promises': 'error',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'warn',
     },
   },
   ...storybook.configs['flat/recommended'],

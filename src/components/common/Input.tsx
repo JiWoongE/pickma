@@ -1,4 +1,3 @@
-import { cn } from '@/lib/utils';
 import {
   Field,
   Label,
@@ -6,6 +5,8 @@ import {
   Description,
 } from '@headlessui/react';
 import { type InputHTMLAttributes, type ReactNode } from 'react';
+
+import { cn } from '@/lib/utils';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -29,7 +30,7 @@ export function Input({
         {startIcon && (
           <div
             aria-hidden="true"
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-gray-400"
           >
             {startIcon}
           </div>
@@ -38,9 +39,9 @@ export function Input({
           {...props}
           invalid={Boolean(error)}
           className={cn(
-            'w-full border rounded-[10px] py-2 text-sm outline-none focus:border-primary-500 placeholder:text-gray-300',
-            'data-[invalid]:border-error border-gray-200',
-            'data-[disabled]:bg-gray-100 data-[disabled]:text-gray-400 data-[disabled]:cursor-not-allowed',
+            'focus:border-primary-500 w-full rounded-md border py-2 text-sm outline-none placeholder:text-gray-300',
+            'data-invalid:border-error border-gray-200',
+            'data-disabled:cursor-not-allowed data-disabled:bg-gray-100 data-disabled:text-gray-400',
             startIcon ? 'pl-9' : 'pl-4',
             endIcon ? 'pr-9' : 'pr-4',
             className
@@ -49,14 +50,14 @@ export function Input({
         {endIcon && (
           <div
             aria-hidden="true"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+            className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-gray-400"
           >
             {endIcon}
           </div>
         )}
       </div>
       {error && (
-        <Description aria-live="polite" className="text-sm text-error">
+        <Description aria-live="polite" className="text-error text-sm">
           {error}
         </Description>
       )}
