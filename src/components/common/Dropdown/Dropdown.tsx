@@ -48,13 +48,7 @@ export function Dropdown(props: DropdownProps) {
     <Menu as="div" className="relative inline-block text-left">
       <MenuButton
         disabled={props.disabled}
-        className="
-          inline-flex items-center justify-center gap-2 rounded-sm border border-gray-300
-          bg-white px-4 py-2 text-sm font-medium text-gray-900 transition
-          hover:bg-gray-100
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
-          disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400
-        "
+        className="headlessui-focus-visible:outline-none headlessui-focus-visible:ring-2 headlessui-focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 rounded-sm border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400"
       >
         <span>{buttonLabel}</span>
         <ChevronDownIcon
@@ -80,12 +74,7 @@ export function Dropdown(props: DropdownProps) {
                     disabled={item.disabled}
                     aria-selected={isSelected}
                     onClick={handleSelectItemClick}
-                    className="
-                      block w-full rounded px-3 py-2 text-left text-sm text-gray-700
-                      data-focus:bg-gray-100
-                      data-disabled:cursor-not-allowed data-disabled:opacity-50
-                      aria-selected:font-semibold aria-selected:text-gray-900
-                    "
+                    className="block w-full rounded px-3 py-2 text-left text-sm text-gray-700 aria-selected:font-semibold aria-selected:text-gray-900 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-focus:bg-gray-100"
                   >
                     {item.label}
                   </button>
@@ -103,11 +92,7 @@ export function Dropdown(props: DropdownProps) {
                     type="button"
                     disabled={item.disabled}
                     onClick={handleActionItemClick}
-                    className="
-                      block w-full rounded px-3 py-2 text-left text-sm text-gray-700
-                      data-focus:bg-gray-100
-                      data-disabled:cursor-not-allowed data-disabled:opacity-50
-                    "
+                    className="block w-full rounded px-3 py-2 text-left text-sm text-gray-700 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-focus:bg-gray-100"
                   >
                     {item.label}
                   </button>
