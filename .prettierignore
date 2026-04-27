@@ -4,3 +4,5 @@ out
 build
 dist
 *.lock
+coverage
+storybook-static

@@ -5,7 +5,7 @@ import { ChevronDownIcon, ChevronUpIcon, UserIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { User } from '@/types/user';
+import type { User } from '@/types/user';
 
 import { Button } from '../Button/Button';
 import Logo from '../Logo/Logo';
@@ -33,7 +33,7 @@ interface HeaderProps {
 
 export function Header({ user, logoHref, menuItems, slot }: HeaderProps) {
   return (
-    <header className="w-full grid grid-cols-[auto_1fr_auto] items-center px-12 py-4 border-b border-gray-200">
+    <header className="grid w-full grid-cols-[auto_1fr_auto] items-center border-b border-gray-200 px-12 py-4">
       {logoHref ? (
         <Link href={logoHref} aria-label="홈으로 이동">
           <Logo />
@@ -75,7 +75,7 @@ function GuestMenu({ menuItems }: { menuItems: HeaderMenuItem[] }) {
           <Link
             key={item.label}
             href={item.href}
-            className={`px-4 py-2 text-primary-500 rounded hover:bg-primary-50 transition ${item.className || ''}`}
+            className={`text-primary-500 hover:bg-primary-50 rounded px-4 py-2 transition ${item.className || ''}`}
           >
             {item.label}
           </Link>
@@ -94,7 +94,7 @@ function UserMenu({
 }) {
   if (menuItems.length === 0) {
     return (
-      <span className="px-4 py-2 flex items-center gap-2">
+      <span className="flex items-center gap-2 px-4 py-2">
         <ProfileAvatar user={user} />
         {user.name}
       </span>
@@ -104,13 +104,13 @@ function UserMenu({
   return (
     <div className="relative">
       <Menu>
-        <MenuButton className="px-4 py-2 flex items-center gap-2 group rounded-sm focus:outline-none headlessui-focus-visible:ring-2 headlessui-focus-visible:ring-primary-500 headlessui-focus-visible:ring-offset-2">
+        <MenuButton className="group headlessui-focus-visible:ring-2 headlessui-focus-visible:ring-primary-500 headlessui-focus-visible:ring-offset-2 flex items-center gap-2 rounded-sm px-4 py-2 focus:outline-none">
           <ProfileAvatar user={user} />
           {user.name}
-          <ChevronDownIcon className="w-4 h-4 group-data-active:hidden" />
-          <ChevronUpIcon className="w-4 h-4 hidden group-data-active:block" />
+          <ChevronDownIcon className="h-4 w-4 group-data-active:hidden" />
+          <ChevronUpIcon className="hidden h-4 w-4 group-data-active:block" />
         </MenuButton>
-        <MenuItems className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded shadow-lg focus:outline-none">
+        <MenuItems className="absolute right-0 mt-2 w-48 rounded border border-gray-200 bg-white shadow-lg focus:outline-none">
           {menuItems.map((item) =>
             item.type === 'link' ? (
               <MenuItem
@@ -127,7 +127,7 @@ function UserMenu({
                 as="button"
                 type="button"
                 onClick={item.onClick}
-                className={`block w-full text-left px-4 py-2 hover:bg-gray-100 data-focus:bg-gray-100 ${item.className || ''}`}
+                className={`block w-full px-4 py-2 text-left hover:bg-gray-100 data-focus:bg-gray-100 ${item.className || ''}`}
               >
                 {item.label}
               </MenuItem>
@@ -141,7 +141,7 @@ function UserMenu({
 
 function ProfileAvatar({ user }: { user: User }) {
   return (
-    <div className="relative w-8 h-8 rounded-full overflow-hidden bg-primary-100 flex items-center justify-center">
+    <div className="bg-primary-100 relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full">
       {user.profileImageUrl ? (
         <Image
           src={user.profileImageUrl}
@@ -151,7 +151,7 @@ function ProfileAvatar({ user }: { user: User }) {
           className="object-cover"
         />
       ) : (
-        <UserIcon className="w-6 h-6 text-primary-500" strokeWidth={1.5} />
+        <UserIcon className="text-primary-500 h-6 w-6" strokeWidth={1.5} />
       )}
     </div>
   );
