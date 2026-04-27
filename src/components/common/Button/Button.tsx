@@ -1,4 +1,4 @@
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { type ButtonHTMLAttributes, type ReactNode } from 'react';
 
 interface ButtonProps extends Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -10,7 +10,7 @@ interface ButtonProps extends Omit<
 }
 
 const baseStyles =
-  'inline-flex items-center justify-center rounded-sm border px-4 py-2 font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:bg-gray-400';
+  'inline-flex items-center justify-center rounded-sm border px-4 py-2 font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-gray-200';
 
 const variantStyles = {
   filled: {
@@ -31,31 +31,23 @@ const variantStyles = {
   },
 };
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (
-    {
-      children,
-      className,
-      type = 'button',
-      variant = 'filled',
-      color = 'primary',
-      ...props
-    },
-    ref
-  ) => {
-    const style = variantStyles[variant][color];
+export function Button({
+  children,
+  className,
+  type = 'button',
+  variant = 'filled',
+  color = 'primary',
+  ...props
+}: ButtonProps) {
+  const style = variantStyles[variant][color];
 
-    return (
-      <button
-        ref={ref}
-        type={type}
-        className={`${baseStyles} ${style} ${className ?? ''}`}
-        {...props}
-      >
-        {children}
-      </button>
-    );
-  }
-);
-
-Button.displayName = 'Button';
+  return (
+    <button
+      type={type}
+      className={`${baseStyles} ${style} ${className ?? ''}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
