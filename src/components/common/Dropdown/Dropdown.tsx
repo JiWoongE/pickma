@@ -33,13 +33,13 @@ interface SelectDropdownProps extends BaseDropdownProps {
   type: 'select';
   placeholder?: string;
   items: SelectDropdownItem[];
-  value?: string;
+  value: string | undefined;
   onChange: (value: string) => void;
 }
 
 interface ActionDropdownProps extends BaseDropdownProps {
   type: 'action';
-  placeholder: string;
+  label: string;
   items: ActionDropdownItem[];
 }
 
@@ -49,7 +49,7 @@ const triggerClassName =
   'group headlessui-focus-visible:outline-none headlessui-focus-visible:ring-2 headlessui-focus-visible:ring-offset-2 inline-flex items-center justify-center gap-2 rounded-sm border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:text-gray-400';
 
 const dropdownItemsClassName =
-  'absolute left-0 z-10 mt-2 min-w-full w-max rounded-md border border-gray-200 bg-white p-1 shadow-lg focus:outline-none';
+  'z-10 mt-2 min-w-[--button-width] w-max rounded-md border border-gray-200 bg-white p-1 shadow-lg focus:outline-none';
 
 const dropdownItemClassName =
   'block w-full whitespace-nowrap rounded px-3 py-2 text-left text-sm text-gray-700 data-disabled:cursor-not-allowed data-disabled:opacity-50 data-focus:bg-gray-100';
@@ -101,11 +101,11 @@ function ActionDropdown(props: ActionDropdownProps) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <MenuButton disabled={props.disabled} className={triggerClassName}>
-        <span>{props.placeholder}</span>
+        <span>{props.label}</span>
         <DropdownChevron />
       </MenuButton>
 
-      <MenuItems className={dropdownItemsClassName}>
+      <MenuItems anchor="bottom start" className={dropdownItemsClassName}>
         {props.items.map((item) => (
           <MenuItem key={item.id} disabled={item.disabled}>
             <button
